@@ -57,12 +57,12 @@ WHERE country = 'Nepal';
 
 
 -- Question 5:
-SELECT first_name, last_name, COUNT(rental_id)
+SELECT first_name, last_name, COUNT(payment_id)
 FROM staff
-INNER JOIN rental
-ON staff.staff_id = rental.staff_id
+INNER JOIN payment
+ON staff.staff_id = payment.staff_id
 GROUP BY first_name, last_name
-ORDER BY COUNT(rental_id) DESC;
+ORDER BY COUNT(payment_id) DESC;
 
 
 
@@ -75,22 +75,25 @@ ORDER BY rating;
 
 
 --Question 7:
--- SELECT customer_id, first_name, last_name, amount
--- FROM customer
--- WHERE customer_id IN (
--- 	SELECT customer_id
--- 	FROM payment
---  	GROUP BY customer_id, amount
---  	HAVING COUNT(amount) = 1 AND amount > 6.99
--- );
+SELECT first_name, last_name
+FROM customer
+WHERE customer_id IN (
+	SELECT customer_id
+	FROM payment
+	WHERE amount > 6.99
+	GROUP BY customer_id
+	HAVING COUNT(customer_id) = 1
+);
 
--- SELECT first_name, last_name, amount
+--with join:
+
+-- SELECT first_name, last_name
 -- FROM customer
 -- INNER JOIN payment
 -- ON customer.customer_id = payment.customer_id
 -- WHERE amount > 6.99
--- GROUP BY first_name, last_name, amount
--- ORDER BY last_name;
+-- GROUP BY first_name, last_name
+-- HAVING COUNT(last_name) = 1;
 
 
 
